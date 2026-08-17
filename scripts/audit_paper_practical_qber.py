@@ -10,7 +10,7 @@ sys.path.insert(0, str(ROOT / "src"))
 # PAPER PARAMETERS
 # ============================================================
 
-P =_VALUES = [
+P_VALUES = [
     0.01,
     0.02,
     0.03,
@@ -174,6 +174,7 @@ def main():
         "p       Q_align      Delta_PNS      "
         "Dark-term"
     )
+
 
     for p in P_VALUES:
 
