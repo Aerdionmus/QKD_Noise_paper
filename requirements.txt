@@ -1,4 +1,6 @@
-numpy>=1.24,<3
-pytest>=8,<9
+matplotlib==3.11.1
+numpy==1.26.4
 qiskit==0.45.3
 qiskit-aer==0.13.3
+qiskit-terra==0.45.3
+scipy==1.17.1
