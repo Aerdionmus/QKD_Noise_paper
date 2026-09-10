@@ -45,26 +45,20 @@ E91_QBER_THRESHOLD = 0.146
 # CHSH configuration
 # ---------------------------------------------------------------------------
 #
-# IMPORTANT:
-# The paper gives the CHSH expression
+# The executable implementation uses the CHSH convention
 #
-# S = |E(a,b) - E(a,b') + E(a',b) + E(a',b')|
+#     S = |E(a,b) + E(a,b') + E(a',b) - E(a',b')|
 #
-# but does not explicitly state the mapping from its six listed
-# measurement bases to a, a', b, b'.
-#
-# We therefore expose the mapping here instead of hiding an assumption.
-#
-# This is the conventional assignment compatible with the available
-# measurement-angle sets:
+# with the following measurement angles:
 #
 #     a  = 0°
-#     a' = 90°
-#     b  = 45°
-#     b' = 135°
+#     a' = 45°
+#     b  = 22.5°
+#     b' = -22.5°
 #
-# Change this dictionary if your project's reference implementation
-# specifies a different mapping.
+# The measurement convention is
+#
+#     M(theta) = cos(2 theta) Z + sin(2 theta) X
 # ---------------------------------------------------------------------------
 CHSH_SETTINGS = {
     "a": 0.0,

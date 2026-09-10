@@ -22,7 +22,7 @@ the accompanying code. `src/qkd_noise/channels.py` is unmodified.
 
 ## 1. Motivation
 
-The repository's canonical composite-noise pipeline is the triple ordering
+The repository's historical canonical composite-noise pipeline is the triple ordering
 
 ```
 N_AD ∘ N_deph ∘ N_dep      (gamma = p)
@@ -30,12 +30,11 @@ N_AD ∘ N_deph ∘ N_dep      (gamma = p)
 
 i.e. "A o P o D" in the notation used throughout this project
 (`X o Y := "apply Y first, then X"`, matching the convention already
-established in `scripts/audit_channel_commutation_dp.py`). The existing
-`docs/PHASE_2_DECISIONS.md` freezes this specific ordering. Before
-expanding the audit to the full space of orderings, this document asks:
-does the *ordering* of D (depolarizing), P (dephasing), and A (amplitude
-damping) matter, and if so, at which level — the channel itself, or the
-BB84 observable computed from it?
+established in `scripts/audit_channel_commutation_dp.py`). The full frozen
+audit now covers all six permutations. It establishes the exact ordering
+classification, the affine translation defect, and the resulting operational
+consequences rather than treating the historical triple ordering as the whole
+scientific result.
 
 ## 2. Canonical channel definitions (by reference)
 
@@ -325,7 +324,7 @@ also reports the exact numbers at runtime.
 - However, the *composite channel itself* is not ordering-independent:
   D and A do not commute, and the six triple orderings fall into exactly
   two distinct equivalence classes as CPTP maps. If the paper (or a
-  future analysis) considers any observable other than the specific
+  analysis) considers any observable other than the specific
   BB84-averaged QBER — e.g. per-basis QBER asymmetry, a different
   input-state ensemble, entanglement-based protocols (E91) where the
   translation term is not automatically averaged away, or any use of the
@@ -357,8 +356,8 @@ also reports the exact numbers at runtime.
 
 ## 11. Addendum: Bit-Conditioned QBER Asymmetry (Delta Q_Z)
 
-This addendum investigates the natural next candidate identified in
-Section 10: an observable that does *not* symmetrize `|0>` and `|1>`
+This addendum records an ordering-sensitive observable that does *not*
+symmetrize `|0>` and `|1>`
 together, since Section 6 showed that symmetrization is exactly the step
 that hides the translation term. It follows the same EXACT / NUMERICAL /
 INTERPRETATION / OPEN QUESTION labeling as the rest of this document, and
@@ -591,15 +590,36 @@ Reasoning:
   survives full generalization). But absent a concrete link to a
   security or key-rate consequence, it does not yet rise to (A) "strong
   candidate for a new theorem" on its own -- it is best framed as a
-  precise structural lemma supporting a future result, not a headline
-  result by itself.
-- Recommendation for next steps (not executed in this task, per the
-  request to stop here): if this is to become a stronger result, the
-  most direct path is connecting `Delta_Q_Z` (or the underlying `t_z`
-  asymmetry) to a quantity that *does* feed a security bound -- e.g.
-  whether a finite-key estimator that (mis)assumes bit-symmetric noise
-  incurs a bias of order `d*gamma`, rather than further generalizing the
-  channel algebra, which is now fairly complete.
+  precise structural lemma rather than a standalone security result.
+- No security or key-rate consequence is asserted for `Delta_Q_Z`; the
+  repository records it as an exact channel/observable diagnostic.
+
+## 12. Werner-state visibility robustness — EXACT RESULT
+
+The frozen E91 robustness study uses
+
+```
+rho_W(v) = v |Phi+><Phi+| + (1-v) I/4.
+```
+
+For the two-sided channel output, direct simulation and regression tests
+validate the exact correlation tensor
+
+```
+T(v) = diag(v M_x^2, -v M_x^2, v M_z^2 + t_z^2).
+```
+
+The ordering-dependent part is therefore
+
+```
+Delta T_zz = 8 d gamma^2 (3-2d) / 9,
+```
+
+which is exactly independent of `v`: the common term `v M_z^2` cancels
+between the two ordering classes. Reduced visibility nevertheless decreases
+the absolute operational regions for concurrence, fixed-setting CHSH
+violation, and DIQKD positivity. This result is a robustness statement for
+the validated model, not a new state-preparation or security model.
 
 ## Open Questions
 
@@ -617,5 +637,8 @@ Reasoning:
   the general weighted-average formula of Section 11.3) has any
   consequence for a security bound, finite-key estimator, or key rate --
   this document does not attempt that connection (see Section 11.5).
-- E91/CHSH ordering-dependence remains entirely unexamined, per the
-  explicit scope limitation of this task.
+- E91/CHSH ordering dependence is now covered by
+  `scripts/run_e91_ordering_study.py`, with concurrence and Werner visibility
+  extensions in the corresponding E91 ordering studies. The legacy protocol
+  implementation remains a separate implementation and is not silently
+  reconciled here.
