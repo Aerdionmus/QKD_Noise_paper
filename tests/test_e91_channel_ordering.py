@@ -26,6 +26,8 @@ from pathlib import Path
 import numpy as np
 import pytest
 
+from qkd_noise.protocols import e91 as legacy_e91
+
 TOL = 1e-12
 
 
@@ -187,6 +189,21 @@ def test_fixed_setting_chsh_equals_sqrt2_times_Txx_plus_Tzz(mod):
             S_code = mod.fixed_setting_chsh(rho)
             S_formula = np.sqrt(2) * (T[0, 0] + T[2, 2])
             assert abs(S_code - S_formula) < TOL
+
+
+def test_legacy_e91_chsh_matches_ordering_study_fixed_setting(mod):
+    """The executable legacy CHSH value matches S_fixed up to abs()."""
+    rho = mod.apply_ordering(
+        mod.phi_plus(),
+        mod.ORDERINGS["P o D o A"],
+        0.05,
+        0.03,
+        0.04,
+        "two",
+    )
+    fixed_signed = mod.fixed_setting_chsh(rho)
+    legacy_absolute = legacy_e91.chsh_value(rho)
+    assert abs(legacy_absolute - abs(fixed_signed)) < TOL
 
 
 # ------------------------------------------------------------------
@@ -374,4 +391,3 @@ def test_run_study_reports_both_s_fixed_and_s_max_separately(mod):
     expected_rate, expected_valid = study.AUDIT.diqkd_rate(point["Q"], point["fixed_chsh"])
     assert point["diqkd_rate_raw"] == expected_rate
     assert point["chsh_valid"] == expected_valid
-
