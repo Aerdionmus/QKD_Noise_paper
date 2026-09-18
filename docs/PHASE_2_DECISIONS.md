@@ -92,7 +92,4 @@ The literal Eq. (13) is exposed as a diagnostic because α is reported in dB/km.
 
 The stated Kraus channels are implemented literally. No artificial cross-term is added to force agreement with the paper's theorem.
 
-The repository does not treat “sub-additive quadratic correction” or
-“super-additivity” as validated results. The frozen contribution is the exact
-ordering classification, its affine defect, and the operational consequences
-listed above.
+The repository does not reproduce the manuscript's stated super-additivity theorem from the literal Kraus maps. Separately, the D/P sub-cascade has an exact symmetric-BB84 composition correction: `Q_D = 2p/3`, `Q_P = p/2`, and `Q_DP = 7p/6 - 2p^2/3`, hence `Q_DP - (Q_D + Q_P) = -2p^2/3`. This is a non-additivity result for sequential composition, not evidence of ordering dependence; the full six-order study still finds the standard symmetric BB84 average QBER to be ordering-independent.
