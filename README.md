@@ -44,7 +44,7 @@ Known unresolved items:
 - The legacy E91 protocol implementation and its CHSH-setting convention
   require later reconciliation with the separate fixed-setting ordering study.
 - Reported PRI values are inconsistent with Eq. (20).
-- The stated super-additivity theorem is not reproduced by the stated Kraus maps.
+- The manuscript's stated super-additivity theorem is not reproduced by the literal Kraus maps. This is distinct from the exact D/P composition correction below: the symmetric BB84 QBER for dephasing-after-depolarizing is `Q_DP = 7p/6 - 2p^2/3`, so its deviation from `Q_D + Q_P = 7p/6` is the exact sub-additive term `-2p^2/3`. This is a composition/non-additivity result, not an ordering-dependence result.
 - The dark-count attenuation expression appears inconsistent with the stated dB/km parameterization.
 - The DIQKD expression used by the ordering study is an application of an
   established literature bound, not a newly proved security theorem.

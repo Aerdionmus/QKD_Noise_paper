@@ -110,6 +110,9 @@ The following remain unresolved and are not silently repaired:
 - The dark-count attenuation expression is inconsistent with the stated dB/km
   parameterization and is retained only as an audit diagnostic.
 - The manuscript's stated super-additivity theorem is not reproduced by the
-  literal Kraus maps.
+  literal Kraus maps. Separately, the exact D/P sub-cascade satisfies
+  `Q_DP = 7p/6 - 2p^2/3`, so its deviation from `Q_D + Q_P` is the exact
+  sub-additive correction `-2p^2/3`; this does not imply ordering dependence
+  of the symmetric four-state BB84 QBER.
 - Legacy E91 setting/interpretation issues remain separate from the fixed-setting
   ordering study.
